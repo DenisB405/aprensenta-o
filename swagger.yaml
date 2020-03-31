@@ -1,0 +1,157 @@
+swagger: '2.0'
+
+schemes:
+  - https
+  
+host: localhost:44351
+basePath: /api/v1
+
+info:
+  version: 2.0.0
+  title: Sesmec Api
+  description: Adiministra o cadastro de instituições.
+  termsOfService: https://localhost:44351/api/v1/termo-uso
+  contact:
+    name: Rafael
+    url: https://localhost:44351/api/v1/suporte
+    email: denisemail@email.com
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+
+
+paths:
+  '/instituicao/cadastrar':
+    post: 
+      summary: Cadastra Instituicao
+      description: Cadastra uma Instituição
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      operationId: cadastrar
+      parameters: 
+        - in: body
+          name: instituicao_
+          schema: 
+            $ref: '#/definitions/InstituicaoRequest'
+      responses:
+        200:
+          description: Cadastro Efetuado com Sucesso.
+          schema:
+            $ref: '#/definitions/InstituicaoResponse'
+        400:
+          description: Cadastro Inválido.
+    
+  '/instituicao/buscaPorCodigo/{codigo}':
+    get:
+      summary: Cadastra Instituicao
+      description: Busca instituição pelo código.
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      operationId: buscaPorCodigo
+      parameters:
+        - in: path
+          name: codigo
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Cadastro Efetuado com Sucesso.
+          schema:
+            $ref: '#/definitions/InstituicaoResponse'
+        400:
+          description: Cadastro Inválido.
+    
+  '/instituicao/retornaPagina':
+    get:
+      summary: Retorno de Paginação
+      description: Retorna paginacao de instituicao.  
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      operationId: retornaPagina
+      parameters: 
+        - in: body
+          name: pagina
+          schema:
+            $ref: '#/definitions/InstituicaoResponse'
+      responses:
+        200:
+          description: Cadastro Efetuado com Sucesso.
+          schema:
+            $ref: '#/definitions/PageResponse'
+        400:
+          description: Cadastro Inválido.
+    
+      
+          
+          
+definitions:
+  Instituicao:
+      type: object
+      properties: 
+        codigo: 
+          type: integer
+          format: int32
+          example: 15
+        descricao:
+          type: string
+          example: Universidade Federal
+        usuario:
+          type: string
+          example: Silvanilda 
+          
+  InstituicaoRequest:
+      type: object
+      properties:
+        codigo: 
+          type: integer
+          format: int32
+          example: 15
+        descricao:
+          type: string
+          example: Universidade Federal
+          
+  InstituicaoResponse:
+    type: object
+    properties:
+      codigo: 
+        type: integer
+        format: int32
+        example: 15
+      descricao:
+        type: string
+        example: Universidade Federal
+  
+  PageRequest:
+    type: object
+    properties:
+      quantidade:
+        type: integer
+      paginaAtual: 
+        type: integer
+        
+  PageResponse:
+    type: object
+    properties:
+      paginaAtual:
+        type: integer
+      quantidadeTotal: 
+        type: integer
+      instituicoes:
+        type: array
+        items:
+          $ref: '#/definitions/InstituicaoResponse'
+          
+  
+    
+  
+    
+    
+    
+    
+          
